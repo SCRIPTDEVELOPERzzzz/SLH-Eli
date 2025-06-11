@@ -1,41 +1,794 @@
-local a=loadstring(game:HttpGet(('https://sirius.menu/rayfield')))()
-local b=a:CreateWindow({Name="💪Eli Muscle Legend💪 by Sen And Eli💪",Icon=0,LoadingTitle="💪Eli Muscle Legend💪 v1",LoadingSubtitle="by Eli And Sen",Theme="Bloom",ToggleUIKeybind="K",DisableRayfieldPrompts=false,DisableBuildWarnings=false,ConfigurationSaving={Enabled=true,FolderName=nil,FileName="Big Hub"},Discord={Enabled=false,Invite="noinvitelink",RememberJoins=true},KeySystem=true,KeySettings={Title="Eli Key System",Subtitle="Key System",Note="OBTAIN THE KEY IN MY GITHUB RESPIRATORY!!",FileName="Key",SaveKey=false,GrabKeyFromSite=true,Key={"https://raw.githubusercontent.com/SCRIPTDEVELOPERzzzz/SLH-Eli/refs/heads/main/Key"}}})
-local c=b:CreateTab("Farm",4483362458)local d=b:CreateTab("ToolsAndRock",4483362458)local e=b:CreateTab("Eggies",4483362458)local f=b:CreateTab("Teleport+++(+)",4483362458)local g=b:CreateTab("KillerX",4483362458)local h=b:CreateTab("MorningNightDay",4483362458)local i=b:CreateTab("CreditsZ",4483362458)local j=game.Players.LocalPlayer
-local k={Weight=false,Pushups=false,Situps=false,Handstands=false}local l={}local m={}
-local function n(o)k[o]=false end
-local function p(q,r)k[q]=true;l[q]=coroutine.create(function()while k[q]do for s,t in pairs(j.Backpack:GetChildren())do if t.ClassName=="Tool"and t.Name==r then t.Parent=j.Character end end;j.muscleEvent:FireServer("rep")wait(.1)end end)coroutine.resume(l[q])end
-c:CreateSection("AutoLiftTools")c:CreateToggle({Name="Rep Weight (On/Off)",CurrentValue=false,Callback=function(u)if u then p("Weight","Weight")else n("Weight")end end})c:CreateToggle({Name="Rep Pushups (On/Off)",CurrentValue=false,Callback=function(u)if u then p("Pushups","Pushups")else n("Pushups")end end})c:CreateToggle({Name="Rep Situps (On/Off)",CurrentValue=false,Callback=function(u)if u then p("Situps","Situps")else n("Situps")end end})c:CreateToggle({Name="Rep Handstands (On/Off)",CurrentValue=false,Callback=function(u)if u then p("Handstands","Handstands")else n("Handstands")end end})c:CreateButton({Name="Start/Stop Auto Click (Equipped Tool)",Callback=function()if not _G.FarmTabAutoClick then _G.FarmTabAutoClick=true;a:Notify({Title="Auto Click",Content="Auto Click started. Press the button again to stop.",Duration=3})spawn(function()while _G.FarmTabAutoClick do local v=j.Character;if v then for s,w in pairs(v:GetChildren())do if w.ClassName=="Tool"and w.Activate then if w:FindFirstChild("attackTime")then w.attackTime.Value=0 end;w:Activate()end end end;wait(.05)end end)else _G.FarmTabAutoClick=false;a:Notify({Title="Auto Click",Content="Auto Click stopped.",Duration=3})end end})
-c:CreateSection("FarmRebirths")local x,y=false,false;local z=0
-c:CreateInput({Name="Set Rebirth Stop Point",PlaceholderText="Enter rebirths to stop at (number)",RemoveTextAfterFocusLost=false,Callback=function(A)z=tonumber(A)or 0 end})
-c:CreateToggle({Name="Auto Rebirth (On/Off)",CurrentValue=false,Callback=function(B)x=B;while x do wait(.1)local C=j:FindFirstChild("leaderstats")local D=C and C:FindFirstChild("Rebirths")if z>0 and D and D.Value>=z then x=false;break end;game:GetService("ReplicatedStorage").rEvents.rebirthRemote:InvokeServer("rebirthRequest")end end})c:CreateToggle({Name="Auto Target Rebirth (On/Off)",CurrentValue=false,Callback=function(E)y=E;if not E then return end;local C=j:FindFirstChild("leaderstats")local D=C and C:FindFirstChild("Rebirths")if not D or z<=0 then a:Notify({Title="Auto Target Rebirth",Content="Please set a valid rebirth stop point and make sure Rebirths stat exists.",Duration=5})y=false;return end;spawn(function()while y and D.Value<z do wait(.1)game:GetService("ReplicatedStorage").rEvents.rebirthRemote:InvokeServer("rebirthRequest")end;if y and D.Value>=z then a:Notify({Title="Auto Target Rebirth",Content="Target rebirth reached!",Duration=5})end;y=false end)end})
-c:CreateSection("FarmRocks")local F={{name="Legend",durability=1000000,label="Legend Gym Rock"},{name="King",durability=5000000,label="Muscle King Gym Rock"},{name="Jungle",durability=10000000,label="Ancient Jungle Rock"},{name="TinyRock",durability=0,label="Tiny Rock"},{name="PunchingRock",durability=10,label="Punching Rock"},{name="LargeRock",durability=100,label="Large Rock"},{name="GoldenRock",durability=5000,label="Golden Rock"},{name="FrozenRock",durability=150000,label="Frozen Rock"},{name="MythicalRock",durability=400000,label="Mythical Rock"},{name="EternalRock",durability=750000,label="Eternal Rock"},}getgenv().autoFarmRocks=getgenv().autoFarmRocks or {}for G,H in ipairs(F)do c:CreateToggle({Name=H.label.." (On/Off)",CurrentValue=false,Callback=function(I)getgenv().autoFarmRocks[H.name]=I;if I then task.spawn(function()while getgenv().autoFarmRocks[H.name]do task.wait(.1)if not getgenv().autoFarmRocks[H.name]then break end;if j:FindFirstChild("Durability")and j.Durability.Value>=H.durability then for s,J in pairs(game:GetService("Workspace").machinesFolder:GetDescendants())do if J.Name=="neededDurability"and J.Value==H.durability and j.Character and j.Character:FindFirstChild("LeftHand")and j.Character:FindFirstChild("RightHand")then firetouchinterest(J.Parent.Rock,j.Character.RightHand,0)firetouchinterest(J.Parent.Rock,j.Character.RightHand,1)firetouchinterest(J.Parent.Rock,j.Character.LeftHand,0)firetouchinterest(J.Parent.Rock,j.Character.LeftHand,1)end end end end end)end end})end
-c:CreateToggle({Name="Auto Fast Punch",CurrentValue=false,Flag="AutoFastPunch",Callback=function(K)_G.fastHitActive=K;if K then coroutine.wrap(function()while _G.fastHitActive do local L=j.Backpack:FindFirstChild("Punch")if L then L.Parent=j.Character;if L:FindFirstChild("attackTime")then L.attackTime.Value=0 end end;wait()end end)()coroutine.wrap(function()while _G.fastHitActive do j.muscleEvent:FireServer("punch","rightHand")j.muscleEvent:FireServer("punch","leftHand")local v=j.Character;if v then local M=v:FindFirstChild("Punch")if M then M:Activate()end end;wait()end end)()coroutine.wrap(function()while _G.fastHitActive do j.muscleEvent:FireServer("rep")wait()end end)()else local v=j.Character;local N=v and v:FindFirstChild("Punch")if N then N.Parent=j.Backpack end end end})
-local function O(P,Q)if not getgenv().comboToggles then getgenv().comboToggles={}end;local R=P.."_Ancient"if getgenv().comboToggles[R]then return end;getgenv().comboToggles[R]=true;spawn(function()while getgenv().comboToggles[R]do for s,S in pairs(j.Backpack:GetChildren())do if S.ClassName=="Tool"and S.Name==Q then S.Parent=j.Character end end;j.muscleEvent:FireServer("rep")j.muscleEvent:FireServer("punch","rightHand")j.muscleEvent:FireServer("punch","leftHand")local v=j.Character;if v then local M=v:FindFirstChild("Punch")if M then M:Activate()end end;for s,T in pairs(game:GetService("Workspace").machinesFolder:GetDescendants())do if T.Name=="neededDurability"and T.Value==10000000 and j.Character and j.Character:FindFirstChild("LeftHand")and j.Character:FindFirstChild("RightHand")then firetouchinterest(T.Parent.Rock,j.Character.RightHand,0)firetouchinterest(T.Parent.Rock,j.Character.RightHand,1)firetouchinterest(T.Parent.Rock,j.Character.LeftHand,0)firetouchinterest(T.Parent.Rock,j.Character.LeftHand,1)end end;wait(.15)end end)end
-local function U(P)if getgenv().comboToggles then local R=P.."_Ancient"getgenv().comboToggles[R]=false end end
-d:CreateToggle({Name="Auto Weight + Auto Punch Ancient Rock",CurrentValue=false,Callback=function(V)if V then O("Weight","Weight")else U("Weight")end end})d:CreateToggle({Name="Auto Pushups + Auto Punch Ancient Rock",CurrentValue=false,Callback=function(V)if V then O("Pushups","Pushups")else U("Pushups")end end})d:CreateToggle({Name="Auto Situps + Auto Punch Ancient Rock",CurrentValue=false,Callback=function(V)if V then O("Situps","Situps")else U("Situps")end end})d:CreateToggle({Name="Auto Handstand + Auto Punch Ancient Rock",CurrentValue=false,Callback=function(V)if V then O("Handstands","Handstands")else U("Handstands")end end})
-local W={"Blue Crystal","Green Crystal","Mythical Crystal","Frost Crystal","Inferno Crystal","Legends Crystal","Muscle Elite Crystal","Jungle Crystal"}local X=W[1]e:CreateDropdown({Name="Select Crystal",Options=W,CurrentOption=X,Callback=function(Y)X=Y end})local Z={},_={}local function a0(a1)Z[a1]=true;_[a1]=coroutine.create(function()while Z[a1]do game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal",a1)a:Notify({Title="Egg Hatch",Content="Hatched "..a1.."!",Duration=2})wait(.5)end end)coroutine.resume(_[a1])end
-local function a2(a1)Z[a1]=false end
-local a3=false;local a4
-e:CreateToggle({Name="Hatch Selected Crystal (On/Off)",CurrentValue=false,Callback=function(a5)a3=a5;if a5 then a4=coroutine.create(function()while a3 do game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal",X)a:Notify({Title="Egg Hatch",Content="Hatched "..X.."!",Duration=2})wait(.5)end end)coroutine.resume(a4)end end})
-e:CreateButton({Name="Hatch Selected Crystal (One Time)",Callback=function()game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal",X)a:Notify({Title="Egg Hatch",Content="Hatched "..X.."!",Duration=2})end})
-for a6,a1 in ipairs(W)do e:CreateToggle({Name=a1.." (On/Off)",CurrentValue=false,Callback=function(a7)if a7 then a0(a1)else a2(a1)end end})end
-c:CreateSection("Anti/Utility/Godmode Features")
-local a8=16
-c:CreateSlider({Name="WalkSpeed",Range={0,1000},Increment=1,Suffix="Speed",CurrentValue=a8,Callback=function(a9)local v=j.Character;if v and v:FindFirstChild("Humanoid")then v.Humanoid.WalkSpeed=a9 end end})
-local b0=false
-c:CreateToggle({Name="Anti Knockback",CurrentValue=false,Callback=function(b1)b0=b1;if b0 then spawn(function()while b0 do local v=j.Character;if v then for s,b2 in pairs(v:GetDescendants())do if b2:IsA("BodyVelocity")or b2:IsA("BodyForce")or b2:IsA("BodyAngularVelocity")or b2:IsA("BodyThrust")or b2:IsA("BodyGyro")then pcall(function()b2:Destroy()end)end;if b2:IsA("Humanoid")and b2.PlatformStand then b2.PlatformStand=false end end end;wait(.1)end end)end end})
-local b3=false;local b4=nil;local b5=nil
-c:CreateToggle({Name="Lock Position (Zero Movements, Full Anti-Teleport)",CurrentValue=false,Callback=function(b6)b3=b6;if b6 then local v=j.Character;if v and v:FindFirstChild("HumanoidRootPart")then b4=v.HumanoidRootPart.CFrame end;b5=coroutine.create(function()while b3 do local v=j.Character;if v and v:FindFirstChild("HumanoidRootPart")and v:FindFirstChild("Humanoid")then local b7=v.HumanoidRootPart;local b8=v.Humanoid;if(b7.CFrame.Position-b4.Position).Magnitude>.1 then b7.CFrame=b4 end;b8.WalkSpeed=0;b8.JumpPower=0;b7.Velocity=Vector3.new(0,0,0)b7.RotVelocity=Vector3.new(0,0,0)b8.PlatformStand=false end;wait(.05)end end)coroutine.resume(b5)end;if not b6 then local v=j.Character;if v and v:FindFirstChild("Humanoid")then local b8=v.Humanoid;b8.WalkSpeed=a8;b8.JumpPower=50 end end end})
-local b9=false
-c:CreateToggle({Name="Anti-Teleport On Rebirth (BETA)",CurrentValue=false,Callback=function(ba)b9=ba;if b9 then spawn(function()local bb=0;while b9 do local C=j:FindFirstChild("leaderstats")local D=C and C:FindFirstChild("Rebirths")if D then if bb~=0 and D.Value>bb then local v=j.Character;if v and v:FindFirstChild("HumanoidRootPart")and b4 then wait(.5)v.HumanoidRootPart.CFrame=b4 end end;bb=D.Value end;wait(.2)end end)end end})
-local bc=false
-c:CreateToggle({Name="Anti AFK",CurrentValue=false,Callback=function(bd)bc=bd;if bc then if j and j.Idled then j.Idled:Connect(function()if bc then local be=game:GetService("VirtualUser")be:ClickButton2(Vector2.new())end end)end end end})
-local bf=false
-c:CreateToggle({Name="GODMODE (Can't be damaged)",CurrentValue=false,Callback=function(bg)bf=bg;if bf then spawn(function()while bf do local v=j.Character;if v and v:FindFirstChild("Humanoid")then local b8=v.Humanoid;if b8.Health<b8.MaxHealth then b8.Health=b8.MaxHealth end;if b8:GetState()==Enum.HumanoidStateType.Dead then b8.Health=b8.MaxHealth end;b8.PlatformStand=false;if v:FindFirstChild("BreakJointsOnDeath")then pcall(function()v.BreakJointsOnDeath:Destroy()end)end;for s,bh in pairs(v:GetDescendants())do if bh:IsA("Explosion")or bh:IsA("Fire")or bh:IsA("Smoke")then pcall(function()bh:Destroy()end)end end end;wait(.05)end end)end end})
-g:CreateSection("Evil Karma Magnet (RemoteEvent)")function isPlayerNameWhitelisted(name)return false end;function isUserIdWhitelisted(userid)return false end
-g:CreateToggle({Name="Magnet Evil Karma to Right Hand & Punch (RemoteEvent)",CurrentValue=false,Callback=function(bi)_G.AutoKillAllEvilKarma=bi;task.spawn(function()local bj=nil;if j.Character and j.Character:FindFirstChild("HumanoidRootPart")then bj=j.Character.HumanoidRootPart.CFrame end;while _G.AutoKillAllEvilKarma do local bk=j.Backpack:FindFirstChild("Punch")if bk and not(j.Character and j.Character:FindFirstChild("Punch"))then j.Character.Humanoid:EquipTool(bk)task.wait(.1)end;for s,bl in pairs(game.Players:GetPlayers())do if bl~=j and bl.Character and bl.Character:FindFirstChild("HumanoidRootPart")and j.Character and j.Character:FindFirstChild("RightHand")and not isPlayerNameWhitelisted(bl.Name)and not isUserIdWhitelisted(bl.UserId)then local bm=false;for s,bn in ipairs(bl.Character:GetChildren())do if bn.Name:lower():find("safe")then bm=true;break end end;if not bm then bl.Character.HumanoidRootPart.CFrame=j.Character.RightHand.CFrame*CFrame.new(0,0,-2)j.muscleEvent:FireServer("punch","rightHand")local bo=j.Character:FindFirstChild("Punch")if bo then bo:Activate()end end end end;if bj and j.Character and j.Character:FindFirstChild("HumanoidRootPart")then j.Character.HumanoidRootPart.CFrame=bj end;task.wait(.2)end end)end})
-f:CreateButton({Name="Rejoin",Callback=function()local bp=game:GetService("TeleportService")bp:Teleport(game.PlaceId,j)end})f:CreateButton({Name="Legends gym",Callback=function()local v=j.Character;if v and v:FindFirstChild("HumanoidRootPart")then v.HumanoidRootPart.CFrame=CFrame.new(4298.60059,1121.89404,-3898.68066)end end})f:CreateButton({Name="Mythical gym",Callback=function()local v=j.Character;if v and v:FindFirstChild("HumanoidRootPart")then v.HumanoidRootPart.CFrame=CFrame.new(2386.89038,139.607956,1094.26367)end end})f:CreateButton({Name="Frost gym",Callback=function()local v=j.Character;if v and v:FindFirstChild("HumanoidRootPart")then v.HumanoidRootPart.CFrame=CFrame.new(-2752.56543,125.822533,-386.73703)end end})f:CreateButton({Name="Eternal gym",Callback=function()local v=j.Character;if v and v:FindFirstChild("HumanoidRootPart")then v.HumanoidRootPart.CFrame=CFrame.new(-6917.79248,182.352829,-1336.63928)end end})f:CreateButton({Name="Tiny island",Callback=function()local v=j.Character;if v and v:FindFirstChild("HumanoidRootPart")then v.HumanoidRootPart.CFrame=CFrame.new(-4.25301933,220.993713,1963.60168)end end})f:CreateButton({Name="Brawl aura 1",Callback=function()local v=j.Character;if v and v:FindFirstChild("HumanoidRootPart")then v.HumanoidRootPart.CFrame=CFrame.new(985.910645,163.795364,-7037.80615)end end})f:CreateButton({Name="Brawl aura 2",Callback=function()local v=j.Character;if v and v:FindFirstChild("HumanoidRootPart")then v.HumanoidRootPart.CFrame=CFrame.new(4466.75342,334.973602,-8425.74512)end end})f:CreateButton({Name="Brawl aura 3",Callback=function()local v=j.Character;if v and v:FindFirstChild("HumanoidRootPart")then v.HumanoidRootPart.CFrame=CFrame.new(-1901.87695,251.895432,-5899.64795)end end})
-h:CreateButton({Name="Set Day",Callback=function()game.Lighting.TimeOfDay="14:00:00"end,})h:CreateButton({Name="Set Night",Callback=function()game.Lighting.TimeOfDay="00:00:00"end,})h:CreateButton({Name="Set Morning",Callback=function()game.Lighting.TimeOfDay="07:00:00"end,})
-i:CreateParagraph({Title="Note",Content="Made For RMPG"})i:CreateParagraph({Title="Second Note",Content="Made by Sen"})
-local function bq()for br,_ in pairs(k)do k[br]=false end;if getgenv().autoFarmRocks then for br,_ in pairs(getgenv().autoFarmRocks)do getgenv().autoFarmRocks[br]=false end end;_G.fastHitActive=false;for bs,_ in pairs(m)do m[bs]=false end;x=false;y=false;_G.AutoKillAllEvilKarma=false;_G.ManualAutoClick=false;_G.FarmTabAutoClick=false;_G.AutoPushupsJungleSquat=false;if game.CoreGui:FindFirstChild("Rayfield")then game.CoreGui.Rayfield:Destroy()end end
-i:CreateButton({Name="Destroy GUI",Callback=function()bq()end,})
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "💪Eli Muscle Legend💪 by Sen And Eli💪",",
+    Icon = 0,
+    LoadingTitle = "💪Eli Muscle Legend💪 v1",
+    LoadingSubtitle = "by Eli And Sen",
+    Theme = "Bloom",
+    ToggleUIKeybind = "K",
+    DisableRayfieldPrompts = false,
+    DisableBuildWarnings = false,
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = nil,
+        FileName = "Big Hub"
+    },
+    Discord = {
+        Enabled = false,
+        Invite = "noinvitelink",
+        RememberJoins = true
+    },
+    KeySystem = true,
+    KeySettings = {
+        Title = "Eli Key System",
+        Subtitle = "Key System",
+        Note = "OBTAIN THE KEY IN MY GITHUB RESPIRATORY!!",
+        FileName = "Key",
+        SaveKey = false,
+        GrabKeyFromSite = true,
+        Key = {"https://raw.githubusercontent.com/SCRIPTDEVELOPERzzzz/SLH-Eli/refs/heads/main/Key"}
+    }
+})
+
+local TabFarm = Window:CreateTab("Farm", 4483362458)
+local TabTools = Window:CreateTab("ToolsAndRock", 4483362458)
+local TabEgg = Window:CreateTab("Eggies", 4483362458)
+local TabTeleport = Window:CreateTab("Teleport+++(+)", 4483362458)
+local TabKiller = Window:CreateTab("KillerX", 4483362458)
+local TabDayNight = Window:CreateTab("MorningNightDay", 4483362458)
+local TabCredits = Window:CreateTab("CreditsZ", 4483362458)
+
+local player = game.Players.LocalPlayer
+
+local repToggles = {
+    Weight = false,
+    Pushups = false,
+    Situps = false,
+    Handstands = false
+}
+local runThreads = {}
+local autoComboToggles = {}
+
+local function stopThread(name)
+    repToggles[name] = false
+end
+
+local function startRepThread(name, toolName)
+    repToggles[name] = true
+    runThreads[name] = coroutine.create(function()
+        while repToggles[name] do
+            for _, v in pairs(player.Backpack:GetChildren()) do
+                if v.ClassName == "Tool" and v.Name == toolName then
+                    v.Parent = player.Character
+                end
+            end
+            player.muscleEvent:FireServer("rep")
+            wait(0.1)
+        end
+    end)
+    coroutine.resume(runThreads[name])
+end
+
+TabFarm:CreateSection("AutoLiftTools")
+TabFarm:CreateToggle({
+    Name = "Rep Weight (On/Off)",
+    CurrentValue = false,
+    Callback = function(State)
+        if State then startRepThread("Weight", "Weight") else stopThread("Weight") end
+    end
+})
+TabFarm:CreateToggle({
+    Name = "Rep Pushups (On/Off)",
+    CurrentValue = false,
+    Callback = function(State)
+        if State then startRepThread("Pushups", "Pushups") else stopThread("Pushups") end
+    end
+})
+TabFarm:CreateToggle({
+    Name = "Rep Situps (On/Off)",
+    CurrentValue = false,
+    Callback = function(State)
+        if State then startRepThread("Situps", "Situps") else stopThread("Situps") end
+    end
+})
+TabFarm:CreateToggle({
+    Name = "Rep Handstands (On/Off)",
+    CurrentValue = false,
+    Callback = function(State)
+        if State then startRepThread("Handstands", "Handstands") else stopThread("Handstands") end
+    end
+})
+TabFarm:CreateButton({
+    Name = "Start/Stop Auto Click (Equipped Tool)",
+    Callback = function()
+        if not _G.FarmTabAutoClick then
+            _G.FarmTabAutoClick = true
+            Rayfield:Notify({Title="Auto Click", Content="Auto Click started. Press the button again to stop.", Duration=3})
+            spawn(function()
+                while _G.FarmTabAutoClick do
+                    local char = player.Character
+                    if char then
+                        for _, tool in pairs(char:GetChildren()) do
+                            if tool.ClassName == "Tool" and tool.Activate then
+                                if tool:FindFirstChild("attackTime") then
+                                    tool.attackTime.Value = 0
+                                end
+                                tool:Activate()
+                            end
+                        end
+                    end
+                    wait(0.05)
+                end
+            end)
+        else
+            _G.FarmTabAutoClick = false
+            Rayfield:Notify({Title="Auto Click", Content="Auto Click stopped.", Duration=3})
+        end
+    end
+})
+
+TabFarm:CreateSection("FarmRebirths")
+local autoRebirthActive, autoTargetRebirthActive = false, false
+local rebirthStopAt = 0
+TabFarm:CreateInput({
+    Name = "Set Rebirth Stop Point",
+    PlaceholderText = "Enter rebirths to stop at (number)",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(Value)
+        rebirthStopAt = tonumber(Value) or 0
+    end
+})
+TabFarm:CreateToggle({
+    Name = "Auto Rebirth (On/Off)",
+    CurrentValue = false,
+    Callback = function(State)
+        autoRebirthActive = State
+        while autoRebirthActive do
+            wait(0.1)
+            local leaderstats = player:FindFirstChild("leaderstats")
+            local rebirths = leaderstats and leaderstats:FindFirstChild("Rebirths")
+            if rebirthStopAt > 0 and rebirths and rebirths.Value >= rebirthStopAt then
+                autoRebirthActive = false
+                break
+            end
+            game:GetService("ReplicatedStorage").rEvents.rebirthRemote:InvokeServer("rebirthRequest")
+        end
+    end
+})
+TabFarm:CreateToggle({
+    Name = "Auto Target Rebirth (On/Off)",
+    CurrentValue = false,
+    Callback = function(State)
+        autoTargetRebirthActive = State
+        if not State then return end
+        local leaderstats = player:FindFirstChild("leaderstats")
+        local rebirths = leaderstats and leaderstats:FindFirstChild("Rebirths")
+        if not rebirths or rebirthStopAt <= 0 then
+            Rayfield:Notify({
+                Title = "Auto Target Rebirth",
+                Content = "Please set a valid rebirth stop point and make sure Rebirths stat exists.",
+                Duration = 5
+            })
+            autoTargetRebirthActive = false
+            return
+        end
+        spawn(function()
+            while autoTargetRebirthActive and rebirths.Value < rebirthStopAt do
+                wait(0.1)
+                game:GetService("ReplicatedStorage").rEvents.rebirthRemote:InvokeServer("rebirthRequest")
+            end
+            if autoTargetRebirthActive and rebirths.Value >= rebirthStopAt then
+                Rayfield:Notify({
+                    Title = "Auto Target Rebirth",
+                    Content = "Target rebirth reached!",
+                    Duration = 5
+                })
+            end
+            autoTargetRebirthActive = false
+        end)
+    end
+})
+
+TabFarm:CreateSection("FarmRocks")
+local rockList = {
+    {name="Legend", durability=1000000, label="Legend Gym Rock"},
+    {name="King", durability=5000000, label="Muscle King Gym Rock"},
+    {name="Jungle", durability=10000000, label="Ancient Jungle Rock"},
+    {name="TinyRock", durability=0, label="Tiny Rock"},
+    {name="PunchingRock", durability=10, label="Punching Rock"},
+    {name="LargeRock", durability=100, label="Large Rock"},
+    {name="GoldenRock", durability=5000, label="Golden Rock"},
+    {name="FrozenRock", durability=150000, label="Frozen Rock"},
+    {name="MythicalRock", durability=400000, label="Mythical Rock"},
+    {name="EternalRock", durability=750000, label="Eternal Rock"},
+}
+getgenv().autoFarmRocks = getgenv().autoFarmRocks or {}
+for _, rock in ipairs(rockList) do
+    TabFarm:CreateToggle({
+        Name = rock.label .. " (On/Off)",
+        CurrentValue = false,
+        Callback = function(Value)
+            getgenv().autoFarmRocks[rock.name] = Value
+            if Value then
+                task.spawn(function()
+                    while getgenv().autoFarmRocks[rock.name] do
+                        task.wait(0.1)
+                        if not getgenv().autoFarmRocks[rock.name] then break end
+                        if player:FindFirstChild("Durability") and player.Durability.Value >= rock.durability then
+                            for _, v in pairs(game:GetService("Workspace").machinesFolder:GetDescendants()) do
+                                if v.Name == "neededDurability" and v.Value == rock.durability and player.Character and player.Character:FindFirstChild("LeftHand") and player.Character:FindFirstChild("RightHand") then
+                                    firetouchinterest(v.Parent.Rock, player.Character.RightHand, 0)
+                                    firetouchinterest(v.Parent.Rock, player.Character.RightHand, 1)
+                                    firetouchinterest(v.Parent.Rock, player.Character.LeftHand, 0)
+                                    firetouchinterest(v.Parent.Rock, player.Character.LeftHand, 1)
+                                end
+                            end
+                        end
+                    end
+                end)
+            end
+        end
+    })
+end
+
+TabFarm:CreateToggle({
+    Name = "Auto Fast Punch",
+    CurrentValue = false,
+    Flag = "AutoFastPunch",
+    Callback = function(Value)
+        _G.fastHitActive = Value
+        if Value then
+            coroutine.wrap(function()
+                while _G.fastHitActive do
+                    local punch = player.Backpack:FindFirstChild("Punch")
+                    if punch then
+                        punch.Parent = player.Character
+                        if punch:FindFirstChild("attackTime") then
+                            punch.attackTime.Value = 0
+                        end
+                    end
+                    wait()
+                end
+            end)()
+            coroutine.wrap(function()
+                while _G.fastHitActive do
+                    player.muscleEvent:FireServer("punch", "rightHand")
+                    player.muscleEvent:FireServer("punch", "leftHand")
+                    local character = player.Character
+                    if character then
+                        local punchTool = character:FindFirstChild("Punch")
+                        if punchTool then punchTool:Activate() end
+                    end
+                    wait()
+                end
+            end)()
+            coroutine.wrap(function()
+                while _G.fastHitActive do
+                    player.muscleEvent:FireServer("rep")
+                    wait()
+                end
+            end)()
+        else
+            local character = player.Character
+            local equipped = character and character:FindFirstChild("Punch")
+            if equipped then equipped.Parent = player.Backpack end
+        end
+    end,
+})
+
+---------------------- TOOLS+ROCK++ TAB (requested features) ----------------------
+
+local function startComboRepPunch(repType, toolName)
+    if not getgenv().comboToggles then getgenv().comboToggles = {} end
+    local toggleKey = repType .. "_Ancient"
+    if getgenv().comboToggles[toggleKey] then return end
+    getgenv().comboToggles[toggleKey] = true
+    spawn(function()
+        while getgenv().comboToggles[toggleKey] do
+            for _, v in pairs(player.Backpack:GetChildren()) do
+                if v.ClassName == "Tool" and v.Name == toolName then
+                    v.Parent = player.Character
+                end
+            end
+            player.muscleEvent:FireServer("rep")
+            player.muscleEvent:FireServer("punch", "rightHand")
+            player.muscleEvent:FireServer("punch", "leftHand")
+            local character = player.Character
+            if character then
+                local punchTool = character:FindFirstChild("Punch")
+                if punchTool then punchTool:Activate() end
+            end
+            for _, v in pairs(game:GetService("Workspace").machinesFolder:GetDescendants()) do
+                if v.Name == "neededDurability" and v.Value == 10000000 and player.Character and player.Character:FindFirstChild("LeftHand") and player.Character:FindFirstChild("RightHand") then
+                    firetouchinterest(v.Parent.Rock, player.Character.RightHand, 0)
+                    firetouchinterest(v.Parent.Rock, player.Character.RightHand, 1)
+                    firetouchinterest(v.Parent.Rock, player.Character.LeftHand, 0)
+                    firetouchinterest(v.Parent.Rock, player.Character.LeftHand, 1)
+                end
+            end
+            wait(0.15)
+        end
+    end)
+end
+
+local function stopComboRepPunch(repType)
+    if getgenv().comboToggles then
+        local toggleKey = repType .. "_Ancient"
+        getgenv().comboToggles[toggleKey] = false
+    end
+end
+
+TabTools:CreateToggle({
+    Name = "Auto Weight + Auto Punch Ancient Rock",
+    CurrentValue = false,
+    Callback = function(State)
+        if State then
+            startComboRepPunch("Weight", "Weight")
+        else
+            stopComboRepPunch("Weight")
+        end
+    end
+})
+
+TabTools:CreateToggle({
+    Name = "Auto Pushups + Auto Punch Ancient Rock",
+    CurrentValue = false,
+    Callback = function(State)
+        if State then
+            startComboRepPunch("Pushups", "Pushups")
+        else
+            stopComboRepPunch("Pushups")
+        end
+    end
+})
+
+TabTools:CreateToggle({
+    Name = "Auto Situps + Auto Punch Ancient Rock",
+    CurrentValue = false,
+    Callback = function(State)
+        if State then
+            startComboRepPunch("Situps", "Situps")
+        else
+            stopComboRepPunch("Situps")
+        end
+    end
+})
+
+TabTools:CreateToggle({
+    Name = "Auto Handstand + Auto Punch Ancient Rock",
+    CurrentValue = false,
+    Callback = function(State)
+        if State then
+            startComboRepPunch("Handstands", "Handstands")
+        else
+            stopComboRepPunch("Handstands")
+        end
+    end
+})
+
+---------------------- EGG TAB ----------------------
+
+local crystalList = {
+    "Blue Crystal", "Green Crystal", "Mythical Crystal", "Frost Crystal",
+    "Inferno Crystal", "Legends Crystal", "Muscle Elite Crystal", "Jungle Crystal"
+}
+local selectedCrystal = crystalList[1]
+TabEgg:CreateDropdown({
+    Name = "Select Crystal",
+    Options = crystalList,
+    CurrentOption = selectedCrystal,
+    Callback = function(Option)
+        selectedCrystal = Option
+    end
+})
+
+local autoEggToggles = {}
+local autoEggThreads = {}
+
+local function startEggThread(crystal)
+    autoEggToggles[crystal] = true
+    autoEggThreads[crystal] = coroutine.create(function()
+        while autoEggToggles[crystal] do
+            game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal", crystal)
+            Rayfield:Notify({Title = "Egg Hatch", Content = "Hatched " .. crystal .. "!", Duration = 2})
+            wait(0.5)
+        end
+    end)
+    coroutine.resume(autoEggThreads[crystal])
+end
+local function stopEggThread(crystal)
+    autoEggToggles[crystal] = false
+end
+
+local autoSelectedEgg = false
+local autoSelectedEggThread
+
+TabEgg:CreateToggle({
+    Name = "Hatch Selected Crystal (On/Off)",
+    CurrentValue = false,
+    Callback = function(Value)
+        autoSelectedEgg = Value
+        if Value then
+            autoSelectedEggThread = coroutine.create(function()
+                while autoSelectedEgg do
+                    game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal", selectedCrystal)
+                    Rayfield:Notify({Title = "Egg Hatch", Content = "Hatched " .. selectedCrystal .. "!", Duration = 2})
+                    wait(0.5)
+                end
+            end)
+            coroutine.resume(autoSelectedEggThread)
+        end
+    end
+})
+
+TabEgg:CreateButton({
+    Name = "Hatch Selected Crystal (One Time)",
+    Callback = function()
+        game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal", selectedCrystal)
+        Rayfield:Notify({Title = "Egg Hatch", Content = "Hatched " .. selectedCrystal .. "!", Duration = 2})
+    end
+})
+
+for _, crystal in ipairs(crystalList) do
+    TabEgg:CreateToggle({
+        Name = crystal .. " (On/Off)",
+        CurrentValue = false,
+        Callback = function(Value)
+            if Value then
+                startEggThread(crystal)
+            else
+                stopEggThread(crystal)
+            end
+        end
+    })
+end
+
+---------------------- ADDITIONAL FEATURES AT BOTTOM OF FARM TAB ----------------------
+
+TabFarm:CreateSection("Anti/Utility/Godmode Features")
+
+local ws_default = 16
+TabFarm:CreateSlider({
+    Name = "WalkSpeed",
+    Range = {0, 1000},
+    Increment = 1,
+    Suffix = "Speed",
+    CurrentValue = ws_default,
+    Callback = function(Value)
+        local char = player.Character
+        if char and char:FindFirstChild("Humanoid") then
+            char.Humanoid.WalkSpeed = Value
+        end
+    end
+})
+
+local antiKnockbackEnabled = false
+TabFarm:CreateToggle({
+    Name = "Anti Knockback",
+    CurrentValue = false,
+    Callback = function(Value)
+        antiKnockbackEnabled = Value
+        if antiKnockbackEnabled then
+            spawn(function()
+                while antiKnockbackEnabled do
+                    local char = player.Character
+                    if char then
+                        for _, v in pairs(char:GetDescendants()) do
+                            if v:IsA("BodyVelocity") or v:IsA("BodyForce") or v:IsA("BodyAngularVelocity") or v:IsA("BodyThrust") or v:IsA("BodyGyro") then
+                                pcall(function() v:Destroy() end)
+                            end
+                            if v:IsA("Humanoid") and v.PlatformStand then
+                                v.PlatformStand = false
+                            end
+                        end
+                    end
+                    wait(0.1)
+                end
+            end)
+        end
+    end
+})
+
+local lockPositionEnabled = false
+local lockedCFrame = nil
+local lockPosLoop = nil
+TabFarm:CreateToggle({
+    Name = "Lock Position (Zero Movements, Full Anti-Teleport)",
+    CurrentValue = false,
+    Callback = function(Value)
+        lockPositionEnabled = Value
+        if Value then
+            local char = player.Character
+            if char and char:FindFirstChild("HumanoidRootPart") then
+                lockedCFrame = char.HumanoidRootPart.CFrame
+            end
+            lockPosLoop = coroutine.create(function()
+                while lockPositionEnabled do
+                    local char = player.Character
+                    if char and char:FindFirstChild("HumanoidRootPart") and char:FindFirstChild("Humanoid") then
+                        local hrp = char.HumanoidRootPart
+                        local hum = char.Humanoid
+                        if (hrp.CFrame.Position - lockedCFrame.Position).Magnitude > 0.1 then
+                            hrp.CFrame = lockedCFrame
+                        end
+                        hum.WalkSpeed = 0
+                        hum.JumpPower = 0
+                        hrp.Velocity = Vector3.new(0,0,0)
+                        hrp.RotVelocity = Vector3.new(0,0,0)
+                        hum.PlatformStand = false
+                    end
+                    wait(0.05)
+                end
+            end)
+            coroutine.resume(lockPosLoop)
+        end
+        if not Value then
+            local char = player.Character
+            if char and char:FindFirstChild("Humanoid") then
+                local hum = char.Humanoid
+                hum.WalkSpeed = ws_default
+                hum.JumpPower = 50
+            end
+        end
+    end
+})
+
+local antiTeleportOnRebirthEnabled = false
+TabFarm:CreateToggle({
+    Name = "Anti-Teleport On Rebirth (BETA)",
+    CurrentValue = false,
+    Callback = function(Value)
+        antiTeleportOnRebirthEnabled = Value
+        if antiTeleportOnRebirthEnabled then
+            spawn(function()
+                local rebirths = 0
+                while antiTeleportOnRebirthEnabled do
+                    local stats = player:FindFirstChild("leaderstats")
+                    local rebirthStat = stats and stats:FindFirstChild("Rebirths")
+                    if rebirthStat then
+                        if rebirths ~= 0 and rebirthStat.Value > rebirths then
+                            local char = player.Character
+                            if char and char:FindFirstChild("HumanoidRootPart") and lockedCFrame then
+                                wait(0.5)
+                                char.HumanoidRootPart.CFrame = lockedCFrame
+                            end
+                        end
+                        rebirths = rebirthStat.Value
+                    end
+                    wait(0.2)
+                end
+            end)
+        end
+    end
+})
+
+local antiAFKEnabled = false
+TabFarm:CreateToggle({
+    Name = "Anti AFK",
+    CurrentValue = false,
+    Callback = function(Value)
+        antiAFKEnabled = Value
+        if antiAFKEnabled then
+            if player and player.Idled then
+                player.Idled:Connect(function()
+                    if antiAFKEnabled then
+                        local VirtualUser = game:GetService("VirtualUser")
+                        VirtualUser:ClickButton2(Vector2.new())
+                    end
+                end)
+            end
+        end
+    end
+})
+
+local godmodeEnabled = false
+TabFarm:CreateToggle({
+    Name = "GODMODE (Can't be damaged)",
+    CurrentValue = false,
+    Callback = function(Value)
+        godmodeEnabled = Value
+        if godmodeEnabled then
+            spawn(function()
+                while godmodeEnabled do
+                    local char = player.Character
+                    if char and char:FindFirstChild("Humanoid") then
+                        local hum = char.Humanoid
+                        if hum.Health < hum.MaxHealth then
+                            hum.Health = hum.MaxHealth
+                        end
+                        if hum:GetState() == Enum.HumanoidStateType.Dead then
+                            hum.Health = hum.MaxHealth
+                        end
+                        hum.PlatformStand = false
+                        if char:FindFirstChild("BreakJointsOnDeath") then
+                            pcall(function() char.BreakJointsOnDeath:Destroy() end)
+                        end
+                        for _, v in pairs(char:GetDescendants()) do
+                            if v:IsA("Explosion") or v:IsA("Fire") or v:IsA("Smoke") then
+                                pcall(function() v:Destroy() end)
+                            end
+                        end
+                    end
+                    wait(0.05)
+                end
+            end)
+        end
+    end
+})
+
+------------------- KILLER, TELEPORT, DAYNIGHT, CREDITS (unchanged) -------------------
+
+TabKiller:CreateSection("Evil Karma Magnet (RemoteEvent)")
+function isPlayerNameWhitelisted(name) return false end
+function isUserIdWhitelisted(userid) return false end
+
+TabKiller:CreateToggle({
+    Name = "Magnet Evil Karma to Right Hand & Punch (RemoteEvent)",
+    CurrentValue = false,
+    Callback = function(Value)
+        _G.AutoKillAllEvilKarma = Value
+        task.spawn(function()
+            local lastPos = nil
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                lastPos = player.Character.HumanoidRootPart.CFrame
+            end
+            while _G.AutoKillAllEvilKarma do
+                local punchTool = player.Backpack:FindFirstChild("Punch")
+                if punchTool and not (player.Character and player.Character:FindFirstChild("Punch")) then
+                    player.Character.Humanoid:EquipTool(punchTool)
+                    task.wait(0.1)
+                end
+                for _, target in pairs(game.Players:GetPlayers()) do
+                    if target ~= player
+                        and target.Character
+                        and target.Character:FindFirstChild("HumanoidRootPart")
+                        and player.Character
+                        and player.Character:FindFirstChild("RightHand")
+                        and not isPlayerNameWhitelisted(target.Name)
+                        and not isUserIdWhitelisted(target.UserId)
+                    then
+                        local inSafeZone = false
+                        for _, part in ipairs(target.Character:GetChildren()) do
+                            if part.Name:lower():find("safe") then
+                                inSafeZone = true
+                                break
+                            end
+                        end
+                        if not inSafeZone then
+                            target.Character.HumanoidRootPart.CFrame = player.Character.RightHand.CFrame * CFrame.new(0,0,-2)
+                            player.muscleEvent:FireServer("punch", "rightHand")
+                            local tool = player.Character:FindFirstChild("Punch")
+                            if tool then tool:Activate() end
+                        end
+                    end
+                end
+                if lastPos and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                    player.Character.HumanoidRootPart.CFrame = lastPos
+                end
+                task.wait(0.2)
+            end
+        end)
+    end
+})
+
+TabTeleport:CreateButton({
+    Name = "Rejoin",
+    Callback = function()
+        local ts = game:GetService("TeleportService")
+        ts:Teleport(game.PlaceId, player)
+    end
+})
+TabTeleport:CreateButton({
+    Name = "Legends gym",
+    Callback = function()
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = CFrame.new(4298.60059, 1121.89404, -3898.68066)
+        end
+    end
+})
+TabTeleport:CreateButton({
+    Name = "Mythical gym",
+    Callback = function()
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = CFrame.new(2386.89038, 139.607956, 1094.26367)
+        end
+    end
+})
+TabTeleport:CreateButton({
+    Name = "Frost gym",
+    Callback = function()
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = CFrame.new(-2752.56543, 125.822533, -386.73703)
+        end
+    end
+})
+TabTeleport:CreateButton({
+    Name = "Eternal gym",
+    Callback = function()
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = CFrame.new(-6917.79248, 182.352829, -1336.63928)
+        end
+    end
+})
+TabTeleport:CreateButton({
+    Name = "Tiny island",
+    Callback = function()
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = CFrame.new(-4.25301933, 220.993713, 1963.60168)
+        end
+    end
+})
+TabTeleport:CreateButton({
+    Name = "Brawl aura 1",
+    Callback = function()
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = CFrame.new(985.910645, 163.795364, -7037.80615)
+        end
+    end
+})
+TabTeleport:CreateButton({
+    Name = "Brawl aura 2",
+    Callback = function()
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = CFrame.new(4466.75342, 334.973602, -8425.74512)
+        end
+    end
+})
+TabTeleport:CreateButton({
+    Name = "Brawl aura 3",
+    Callback = function()
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = CFrame.new(-1901.87695, 251.895432, -5899.64795)
+        end
+    end
+})
+
+TabDayNight:CreateButton({
+    Name = "Set Day",
+    Callback = function() game.Lighting.TimeOfDay = "14:00:00" end,
+})
+TabDayNight:CreateButton({
+    Name = "Set Night",
+    Callback = function() game.Lighting.TimeOfDay = "00:00:00" end,
+})
+TabDayNight:CreateButton({
+    Name = "Set Morning",
+    Callback = function() game.Lighting.TimeOfDay = "07:00:00" end,
+})
+
+TabCredits:CreateParagraph({
+    Title = "Note",
+    Content = "Made For RMPG"
+})
+TabCredits:CreateParagraph({
+    Title = "Second Note",
+    Content = "Made by Sen"
+})
+local function destroyAll()
+    for name, _ in pairs(repToggles) do repToggles[name] = false end
+    if getgenv().autoFarmRocks then
+        for name, _ in pairs(getgenv().autoFarmRocks) do getgenv().autoFarmRocks[name] = false end
+    end
+    _G.fastHitActive = false
+    for k, _ in pairs(autoComboToggles) do autoComboToggles[k] = false end
+    autoRebirthActive = false
+    autoTargetRebirthActive = false
+    _G.AutoKillAllEvilKarma = false
+    _G.ManualAutoClick = false
+    _G.FarmTabAutoClick = false
+    _G.AutoPushupsJungleSquat = false
+    if game.CoreGui:FindFirstChild("Rayfield") then game.CoreGui.Rayfield:Destroy() end
+end
+TabCredits:CreateButton({
+    Name = "Destroy GUI",
+    Callback = function() destroyAll() end,
+})
